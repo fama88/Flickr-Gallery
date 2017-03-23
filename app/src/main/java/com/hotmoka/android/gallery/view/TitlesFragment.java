@@ -70,6 +70,8 @@ public abstract class TitlesFragment extends ListFragment
         // Delegate to the controller
         MVC.controller.onTitleSelected(position);
     }
+    @Override
+    public void startShareActivity(int position) {};
 
     @Override @UiThread
     public void onModelChanged(Pictures.Event event) {

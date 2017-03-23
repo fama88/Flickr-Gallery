@@ -18,6 +18,9 @@ public interface GalleryLayout {
     @UiThread
     void showPicture(int position);
 
+    @UiThread
+    void shareImage(int position);
+
     /**
      * Notifies that the model has changed. The view
      * will likely redraw itself

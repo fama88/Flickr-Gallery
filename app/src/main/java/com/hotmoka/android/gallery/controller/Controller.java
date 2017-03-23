@@ -1,6 +1,9 @@
 package com.hotmoka.android.gallery.controller;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.UiThread;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,7 +32,9 @@ public class Controller {
         taskCounter.incrementAndGet();
         ControllerService.fetchPicture(context, url);
     }
-
+    public void onSharedClicked(int position) {
+        MVC.forEachView(view -> view.shareImage(position));
+    }
     /**
      * Takes note that the up to date list of titles is needed.
      * It will download it from the Internet, asking Flickr about the
@@ -70,5 +75,5 @@ public class Controller {
      */
     void resetTaskCounter() {
         taskCounter.set(0);
-    }
+    };
 }

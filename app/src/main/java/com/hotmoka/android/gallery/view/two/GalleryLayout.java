@@ -40,6 +40,8 @@ public class GalleryLayout extends LinearLayout
         getPictureFragment().showPicture(position);
     }
 
+    public void shareImage(int position) {getPictureFragment().startShareActivity(position); }
+
     @Override
     public void onModelChanged(Pictures.Event event) {
         // Delegate to both fragments inside this layout

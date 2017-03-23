@@ -3,6 +3,9 @@ package com.hotmoka.android.gallery.view.single;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -54,7 +57,10 @@ public class GalleryLayout extends FrameLayout
             // Commit the transaction
             .commit();
     }
-
+    @Override
+    public void shareImage(int position) {
+        getFragment().startShareActivity(position);
+    }
     @Override
     public void onModelChanged(Pictures.Event event) {
         // Delegate to the only fragment inside this layout

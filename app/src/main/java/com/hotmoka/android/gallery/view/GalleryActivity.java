@@ -1,9 +1,13 @@
 package com.hotmoka.android.gallery.view;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.hotmoka.android.gallery.MVC;
 import com.hotmoka.android.gallery.R;
 
 /**
@@ -34,4 +38,5 @@ public class GalleryActivity extends Activity {
     public void hideProgressIndicator() {
         findViewById(R.id.progress).setVisibility(View.INVISIBLE);
     }
+
 }

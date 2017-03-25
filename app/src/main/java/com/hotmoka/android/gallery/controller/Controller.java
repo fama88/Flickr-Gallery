@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.UiThread;
+import android.widget.ImageView;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -76,4 +77,11 @@ public class Controller {
     void resetTaskCounter() {
         taskCounter.set(0);
     };
+
+
+    public void downloadSmallBitmap(int position, ImageView imageView)
+    {
+        String url = MVC.model.getUrl(position);
+        new ImageDownloaderTask(imageView).execute(url);
+    }
 }

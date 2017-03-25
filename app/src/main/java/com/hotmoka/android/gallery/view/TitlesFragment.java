@@ -1,6 +1,7 @@
 package com.hotmoka.android.gallery.view;
 
 import android.app.ListFragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.view.Menu;
@@ -28,11 +29,20 @@ public abstract class TitlesFragment extends ListFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         // Show the titles, or the empty list if there is none yet
         String[] titles = MVC.model.getTitles();
-        setListAdapter(new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                titles == null ? new String[0] : titles));
+        Bitmap[] bitmaps = MVC.model.getBitmaps();
+        //TODO remove this
+       // Integer[] imageId = new Integer[titles.length];
+
+
+        setListAdapter(new CustomList( getActivity(),
+                titles == null ? new String[0] : titles,
+                bitmaps == null ? new Bitmap[0] : bitmaps));
+        //setListAdapter(new ArrayAdapter<>(getActivity(),
+         //       android.R.layout.simple_list_item_activated_1,
+          //      titles == null ? new String[0] : titles));
 
         // If no titles exist yet, ask the controller to reload them
         if (titles == null) {
@@ -75,10 +85,18 @@ public abstract class TitlesFragment extends ListFragment
 
     @Override @UiThread
     public void onModelChanged(Pictures.Event event) {
-        if (event == PICTURES_LIST_CHANGED)
+        if (event == PICTURES_LIST_CHANGED) {
             // Show the new list of titles
-            setListAdapter(new ArrayAdapter<>(getActivity(),
+            String[] titles = MVC.model.getTitles();
+            Bitmap[] bitmaps = MVC.model.getBitmaps();
+
+
+            setListAdapter(new CustomList(getActivity(),
+                    titles,
+                    bitmaps));
+           /* setListAdapter(new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_list_item_activated_1,
-                    MVC.model.getTitles()));
+                    MVC.model.getTitles()));*/
+        }
     }
 }

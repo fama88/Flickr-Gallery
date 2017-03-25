@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
+import android.util.Log;
 
 import com.hotmoka.android.gallery.MVC;
 
@@ -36,6 +37,12 @@ public class Pictures {
     private final Map<String, Bitmap> bitmaps = new HashMap<>();
 
     /**
+     * A map from each url to the downloaded bitmap.
+     * It maps to null if the bitmap for a url has not been downloaded yet.
+     */
+    private final Map<String, Bitmap> bitmaps_small = new HashMap<>();
+
+    /**
      * Yields the titles of the pictures, if any.
      *
      * @return the titles. Yields {@code null} if no titles have been stored yet
@@ -58,6 +65,18 @@ public class Pictures {
             return null;
         else
             return bitmaps.get(urls[position]);
+    }
+
+    @UiThread
+    public synchronized Bitmap[] getBitmaps() {
+        if(urls == null) return null;
+        Bitmap[] arrayOfBitmap = new Bitmap[ urls.length];
+        for(int i=0; i<arrayOfBitmap.length; i++)
+        {
+            arrayOfBitmap[i] = bitmaps.get(urls[i]);
+        }
+
+        return arrayOfBitmap;
     }
 
     /**

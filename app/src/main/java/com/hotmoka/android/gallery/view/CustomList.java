@@ -42,8 +42,15 @@ public class CustomList extends ArrayAdapter<String>{
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setText(titles[position]);
 
-        if(imageView != null) {
-            MVC.controller.downloadSmallBitmap(position, imageView);
+        Bitmap bitmap = MVC.model.getBitmap(position);
+
+        if(bitmap == null) {
+            String url = MVC.model.getUrl(position);
+            new ImageDownloaderTask(imageView).execute(url);
+        }
+        else
+        {
+            imageView.setImageBitmap(bitmap);
         }
 
 

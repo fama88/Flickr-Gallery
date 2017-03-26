@@ -146,6 +146,16 @@ public class Pictures {
         notifyViews(Event.BITMAP_CHANGED);
     }
 
+    @WorkerThread @UiThread
+    public void setThumbnail(String url, Bitmap bitmap) {
+        synchronized (this) {
+            this.bitmaps.put(url, bitmap);
+        }
+
+        // Tell all registered views that a bitmap changed
+       // notifyViews(Event.BITMAP_CHANGED);
+    }
+
     /**
      * Notifies all views about an event.
      *

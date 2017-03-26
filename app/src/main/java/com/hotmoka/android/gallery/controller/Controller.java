@@ -1,15 +1,20 @@
 package com.hotmoka.android.gallery.controller;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.UiThread;
+import android.util.Log;
 import android.widget.ImageView;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.hotmoka.android.gallery.MVC;
+
+import org.apache.http.HttpStatus;
 
 /**
  * The controller reacts to user events and allows the execution
@@ -33,6 +38,41 @@ public class Controller {
         taskCounter.incrementAndGet();
         ControllerService.fetchPicture(context, url);
     }
+
+    /**
+     * Takes note that a picture is needed and must be downloaded
+     * from the Internet.
+     *
+     * @param url the address where the picture can be found and downloaded
+     */
+    public Bitmap onDownloadRequest(String url) {
+        HttpURLConnection urlConnection = null;
+        try {
+            URL uri = new URL(url);
+            urlConnection = (HttpURLConnection) uri.openConnection();
+            int statusCode = urlConnection.getResponseCode();
+            if (statusCode != HttpStatus.SC_OK) {
+                return null;
+            }
+
+            InputStream inputStream = urlConnection.getInputStream();
+            if (inputStream != null) {
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                MVC.model.setThumbnail(url, bitmap);
+                return bitmap;
+            }
+        } catch (Exception e) {
+            urlConnection.disconnect();
+            Log.w("ImageDownloader", "Error downloading image from " + url);
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+        return null;
+    }
+
+
     public void onSharedClicked(int position) {
         MVC.forEachView(view -> view.shareImage(position));
     }
@@ -79,9 +119,4 @@ public class Controller {
     };
 
 
-    public void downloadSmallBitmap(int position, ImageView imageView)
-    {
-        String url = MVC.model.getUrl(position);
-        new ImageDownloaderTask(imageView).execute(url);
-    }
 }

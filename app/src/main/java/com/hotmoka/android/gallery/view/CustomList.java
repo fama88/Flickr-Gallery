@@ -21,15 +21,14 @@ public class CustomList extends ArrayAdapter<String>{
 
     private final Activity context;
     private final String[] titles;
-    private final Bitmap[] imageBitmap;
 
 
     public CustomList(Activity context,
-                      String[] titles, Bitmap[] imageBitmap) {
+                      String[] titles) {
         super(context, R.layout.table_row_layout, titles);
         this.context = context;
         this.titles = titles;
-        this.imageBitmap = imageBitmap;
+
 
     }
 
@@ -42,11 +41,11 @@ public class CustomList extends ArrayAdapter<String>{
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setText(titles[position]);
 
-        Bitmap bitmap = MVC.model.getBitmap(position);
+        Bitmap bitmap = MVC.model.getThumbnails(position);
 
         if(bitmap == null) {
-            String url = MVC.model.getUrl(position);
-            new ImageDownloaderTask(imageView).execute(url);
+            String thumbnailUrl = MVC.model.getThumbnailUrl(position);
+            new ImageDownloaderTask(imageView).execute(thumbnailUrl);
         }
         else
         {

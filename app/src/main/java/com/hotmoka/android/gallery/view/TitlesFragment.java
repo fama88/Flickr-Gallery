@@ -32,14 +32,12 @@ public abstract class TitlesFragment extends ListFragment
 
         // Show the titles, or the empty list if there is none yet
         String[] titles = MVC.model.getTitles();
-        Bitmap[] bitmaps = MVC.model.getBitmaps();
         //TODO remove this
        // Integer[] imageId = new Integer[titles.length];
 
 
         setListAdapter(new CustomList( getActivity(),
-                titles == null ? new String[0] : titles,
-                bitmaps == null ? new Bitmap[0] : bitmaps));
+                titles == null ? new String[0] : titles));
         //setListAdapter(new ArrayAdapter<>(getActivity(),
          //       android.R.layout.simple_list_item_activated_1,
           //      titles == null ? new String[0] : titles));
@@ -88,12 +86,10 @@ public abstract class TitlesFragment extends ListFragment
         if (event == PICTURES_LIST_CHANGED) {
             // Show the new list of titles
             String[] titles = MVC.model.getTitles();
-            Bitmap[] bitmaps = MVC.model.getBitmaps();
 
 
             setListAdapter(new CustomList(getActivity(),
-                    titles,
-                    bitmaps));
+                    titles));
            /* setListAdapter(new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_list_item_activated_1,
                     MVC.model.getTitles()));*/

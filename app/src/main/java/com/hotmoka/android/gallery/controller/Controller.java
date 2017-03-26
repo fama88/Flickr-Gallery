@@ -45,7 +45,7 @@ public class Controller {
      *
      * @param url the address where the picture can be found and downloaded
      */
-    public Bitmap onDownloadRequest(String url) {
+    public Bitmap onDownloadThumbnailRequest(String url) {
         HttpURLConnection urlConnection = null;
         try {
             URL uri = new URL(url);

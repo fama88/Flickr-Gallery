@@ -29,7 +29,7 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(String... params) {
-        return MVC.controller.onDownloadRequest(params[0]);
+        return MVC.controller.onDownloadThumbnailRequest(params[0]);
     }
 
     @Override

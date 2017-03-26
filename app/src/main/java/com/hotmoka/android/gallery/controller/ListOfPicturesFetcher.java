@@ -43,7 +43,7 @@ class ListOfPicturesFetcher {
             String url = Uri.parse(ENDPOINT).buildUpon()
                     .appendQueryParameter("method", "flickr.photos.getRecent")
                     .appendQueryParameter("api_key", APIKey)
-                    .appendQueryParameter("extras", "url_z")
+                    .appendQueryParameter("extras", "url_z, url_t")
                     .appendQueryParameter("per_page", String.valueOf(howMany))
                     .build().toString();
 
@@ -95,6 +95,7 @@ class ListOfPicturesFetcher {
             if (eventType == XmlPullParser.START_TAG && "photo".equals(parser.getName())) {
                 String caption = parser.getAttributeValue(null, "title");
                 String url = parser.getAttributeValue(null, "url_z");
+                String thumbnailUrl = parser.getAttributeValue(null, "url_t");
                 if (caption == null || caption.isEmpty() || url == null)
                     // The picture might be missing or not have this size
                     continue;
@@ -102,7 +103,7 @@ class ListOfPicturesFetcher {
                 if (caption.length() > MAX_TITLE_LENGTH)
                     caption = caption.substring(0, MAX_TITLE_LENGTH - 3) + "...";
 
-                items.add(new Picture(caption, url));
+                items.add(new Picture(caption, url, thumbnailUrl));
             }
 
         return items;

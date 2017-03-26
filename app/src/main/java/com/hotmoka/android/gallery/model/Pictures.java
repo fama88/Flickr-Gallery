@@ -29,6 +29,10 @@ public class Pictures {
      * The url from where their bitmaps can be download.
      */
     private String[] urls;
+    /**
+     * The url from where their thumbnails bitmaps can be download.
+     */
+    private String[] thumbnail_urls;
 
     /**
      * A map from each url to the downloaded bitmap.
@@ -40,7 +44,9 @@ public class Pictures {
      * A map from each url to the downloaded bitmap.
      * It maps to null if the bitmap for a url has not been downloaded yet.
      */
-    private final Map<String, Bitmap> bitmaps_small = new HashMap<>();
+    private final Map<String, Bitmap> thumbnails = new HashMap<>();
+
+
 
     /**
      * Yields the titles of the pictures, if any.
@@ -68,15 +74,11 @@ public class Pictures {
     }
 
     @UiThread
-    public synchronized Bitmap[] getBitmaps() {
-        if(urls == null) return null;
-        Bitmap[] arrayOfBitmap = new Bitmap[ urls.length];
-        for(int i=0; i<arrayOfBitmap.length; i++)
-        {
-            arrayOfBitmap[i] = bitmaps.get(urls[i]);
-        }
-
-        return arrayOfBitmap;
+    public synchronized Bitmap getThumbnails(int position) {
+        if (urls == null || position < 0 || position >= urls.length)
+            return null;
+        else
+            return thumbnails.get(thumbnail_urls[position]);
     }
 
     /**
@@ -90,6 +92,19 @@ public class Pictures {
     @UiThread
     public synchronized String getUrl(int position) {
         return urls != null && position >= 0 && position < urls.length ? urls[position] : null;
+    }
+
+    /**
+     * Yields the url from where it is possible to download the bitmap
+     * corresponding to the title at the given position, if any.
+     *
+     * @param position the position
+     * @return the url. Yields {@code null} if the url has not been stored yet or
+     *         if the position is illegal
+     */
+    @UiThread
+    public synchronized String getThumbnailUrl(int position) {
+        return thumbnail_urls != null && position >= 0 && position < thumbnail_urls.length ? thumbnail_urls[position] : null;
     }
 
     /**
@@ -110,20 +125,26 @@ public class Pictures {
     public void setPictures(Iterable<Picture> pictures) {
         List<String> titles = new ArrayList<>();
         List<String> urls = new ArrayList<>();
+        List<String> thumbnail_urls = new ArrayList<>();
 
         for (Picture picture: pictures) {
             titles.add(picture.title);
             urls.add(picture.url);
+            thumbnail_urls.add(picture.thumbnailUrl);
+          //  StringBuilder.
         }
 
         String[] titlesAsArray = titles.toArray(new String[titles.size()]);
         String[] urlsAsArray = urls.toArray(new String[urls.size()]);
+        String[] thumbnailUrlsAsArray = thumbnail_urls.toArray(new String[thumbnail_urls.size()]);
 
         // Synchronize for the shortest possible time
         synchronized (this) {
             this.titles = titlesAsArray;
             this.urls = urlsAsArray;
+            this.thumbnail_urls = thumbnailUrlsAsArray;
             this.bitmaps.clear();
+            this.thumbnails.clear();
         }
 
         // Tell all registered views that the list of pictures has changed
@@ -146,15 +167,22 @@ public class Pictures {
         notifyViews(Event.BITMAP_CHANGED);
     }
 
+    /**
+     * Sets the bitmap corresponding to the given url.
+     *
+     * @param thumbnailUrl the url
+     * @param bitmap the bitmap
+     */
     @WorkerThread @UiThread
-    public void setThumbnail(String url, Bitmap bitmap) {
+    public void setThumbnail(String thumbnailUrl, Bitmap bitmap) {
         synchronized (this) {
-            this.bitmaps.put(url, bitmap);
+            this.thumbnails.put(thumbnailUrl, bitmap);
         }
 
         // Tell all registered views that a bitmap changed
-       // notifyViews(Event.BITMAP_CHANGED);
+      //  notifyViews(Event.BITMAP_CHANGED);
     }
+
 
     /**
      * Notifies all views about an event.

@@ -45,43 +45,15 @@ public class Controller {
      *
      * @param context the context that requires the picture
      * @param url the address where the picture can be found and downloaded
+     * @return true if task can be computed, false if is busy
      */
-    public void onThumbnailRequired(Context context, String url) {
-        taskCounter.incrementAndGet();
-        ControllerService.fetchThumbnail(context, url);
-    }
-
-    /**
-     * Takes note that a picture is needed and must be downloaded
-     * from the Internet.
-     *
-     * @param url the address where the picture can be found and downloaded
-     */
-    public Bitmap onDownloadThumbnailRequest(String url) {
-        HttpURLConnection urlConnection = null;
-        try {
-            URL uri = new URL(url);
-            urlConnection = (HttpURLConnection) uri.openConnection();
-            int statusCode = urlConnection.getResponseCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                return null;
-            }
-
-            InputStream inputStream = urlConnection.getInputStream();
-            if (inputStream != null) {
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                MVC.model.setThumbnail(url, bitmap);
-                return bitmap;
-            }
-        } catch (Exception e) {
-            urlConnection.disconnect();
-            Log.w("ImageDownloader", "Error downloading image from " + url);
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
+    public boolean onThumbnailRequired(Context context, String url) {
+        if(taskCounter.get() < 4 ) {
+            taskCounter.incrementAndGet();
+            ControllerService.fetchThumbnail(context, url);
+            return true;
         }
-        return null;
+        return false;
     }
 
 

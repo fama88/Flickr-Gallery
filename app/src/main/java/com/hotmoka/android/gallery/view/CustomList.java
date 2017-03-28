@@ -21,6 +21,7 @@ public class CustomList extends ArrayAdapter<String>{
 
     private final Activity context;
     private final String[] titles;
+    private boolean[] bitmapAlreadyRequeste;
 
 
     public CustomList(Activity context,
@@ -29,6 +30,12 @@ public class CustomList extends ArrayAdapter<String>{
         this.context = context;
         this.titles = titles;
 
+        if(titles != null)
+         bitmapAlreadyRequeste = new boolean[titles.length];
+        for(int i =0; i<titles.length;i++)
+        {
+            bitmapAlreadyRequeste[i] = false;
+        }
 
     }
 
@@ -44,8 +51,10 @@ public class CustomList extends ArrayAdapter<String>{
         Bitmap bitmap = MVC.model.getThumbnails(position);
 
         if(bitmap == null) {
-            String thumbnailUrl = MVC.model.getThumbnailUrl(position);
-            MVC.controller.onThumbnailRequired(context, thumbnailUrl);
+            if(!bitmapAlreadyRequeste[position]) {
+                String thumbnailUrl = MVC.model.getThumbnailUrl(position);
+                bitmapAlreadyRequeste[position] = MVC.controller.onThumbnailRequired(context, thumbnailUrl);
+            }
         }
         else
         {

@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.hotmoka.android.gallery.MVC;
@@ -16,6 +17,7 @@ import com.hotmoka.android.gallery.R;
 import com.hotmoka.android.gallery.model.Pictures;
 
 import static com.hotmoka.android.gallery.model.Pictures.Event.PICTURES_LIST_CHANGED;
+import static com.hotmoka.android.gallery.model.Pictures.Event.THUMBNAIL_CHANGED;
 
 /**
  * A fragment containing the titles of the Flickr Gallery app.
@@ -93,6 +95,10 @@ public abstract class TitlesFragment extends ListFragment
            /* setListAdapter(new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_list_item_activated_1,
                     MVC.model.getTitles()));*/
+        }
+        else if (event == THUMBNAIL_CHANGED)
+        {
+            ((CustomList)getListAdapter()).notifyDataSetChanged();
         }
     }
 }

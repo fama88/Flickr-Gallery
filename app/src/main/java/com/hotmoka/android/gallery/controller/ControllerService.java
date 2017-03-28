@@ -17,6 +17,7 @@ public class ControllerService extends IntentService {
     private final static String PARAM_HOW_MANY = "how many";
     private final static String PARAM_API_KEY = "API key";
     private final static String ACTION_FETCH_BITMAP = "fetch bitmap";
+    private final static String ACTION_FETCH_THUMBNAIL = "fetch thumbnail";
     private final static String PARAM_URL = "url";
 
     public ControllerService() {
@@ -50,6 +51,19 @@ public class ControllerService extends IntentService {
         context.startService(intent);
     }
 
+    /**
+     * Fetches the picture at the given address.
+     *
+     * @param context the context that needs the picture
+     * @param url the address from where the picture can be downloaded
+     */
+    static void fetchThumbnail(Context context, String url) {
+        Intent intent = new Intent(context, ControllerService.class);
+        intent.setAction(ACTION_FETCH_THUMBNAIL);
+        intent.putExtra(PARAM_URL, url);
+        context.startService(intent);
+    }
+
     @Override
     public void onDestroy() {
         MVC.controller.resetTaskCounter();
@@ -65,6 +79,9 @@ public class ControllerService extends IntentService {
                 break;
             case ACTION_FETCH_BITMAP:
                 new BitmapFetcher(intent.getStringExtra(PARAM_URL));
+                break;
+            case ACTION_FETCH_THUMBNAIL:
+                new ThumbnailFetcher(intent.getStringExtra(PARAM_URL));
                 break;
         }
     }

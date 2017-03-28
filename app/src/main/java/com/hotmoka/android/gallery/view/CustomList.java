@@ -45,16 +45,16 @@ public class CustomList extends ArrayAdapter<String>{
 
         if(bitmap == null) {
             String thumbnailUrl = MVC.model.getThumbnailUrl(position);
-            new ImageDownloaderTask(imageView).execute(thumbnailUrl);
+            MVC.controller.onThumbnailRequired(context, thumbnailUrl);
         }
         else
         {
             imageView.setImageBitmap(bitmap);
         }
 
-
-
+        
         return rowView;
     }
+
 
 }

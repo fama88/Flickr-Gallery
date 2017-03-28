@@ -43,6 +43,18 @@ public class Controller {
      * Takes note that a picture is needed and must be downloaded
      * from the Internet.
      *
+     * @param context the context that requires the picture
+     * @param url the address where the picture can be found and downloaded
+     */
+    public void onThumbnailRequired(Context context, String url) {
+        taskCounter.incrementAndGet();
+        ControllerService.fetchThumbnail(context, url);
+    }
+
+    /**
+     * Takes note that a picture is needed and must be downloaded
+     * from the Internet.
+     *
      * @param url the address where the picture can be found and downloaded
      */
     public Bitmap onDownloadThumbnailRequest(String url) {

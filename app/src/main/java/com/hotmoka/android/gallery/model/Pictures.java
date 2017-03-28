@@ -112,7 +112,8 @@ public class Pictures {
      */
     public enum Event {
         PICTURES_LIST_CHANGED,
-        BITMAP_CHANGED
+        BITMAP_CHANGED,
+        THUMBNAIL_CHANGED
     }
 
     /**
@@ -179,8 +180,8 @@ public class Pictures {
             this.thumbnails.put(thumbnailUrl, bitmap);
         }
 
-        // Tell all registered views that a bitmap changed
-      //  notifyViews(Event.BITMAP_CHANGED);
+        // Tell all registered views that a thumbnail changed
+        notifyViews(Event.THUMBNAIL_CHANGED);
     }
 
 

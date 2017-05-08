@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,7 +62,9 @@ public abstract class TitlesFragment extends ListFragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+      //  Log.v("AA",menu.toString());
         inflater.inflate(R.menu.fragment_titles, menu);
+
     }
 
     @Override

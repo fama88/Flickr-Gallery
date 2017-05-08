@@ -24,12 +24,11 @@ class BitmapFetcher {
         Bitmap bitmap = null;
 
         try {
-            Log.d(TAG, "Loading image " + url);
             byte[] bitmapBytes = getUrlBytes(url);
             bitmap = BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length);
         }
         catch (IOException e) {
-            Log.e(TAG, "Error downloading image", e);
+           
         }
         finally {
             MVC.controller.taskFinished();

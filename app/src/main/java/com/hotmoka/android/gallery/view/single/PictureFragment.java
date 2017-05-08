@@ -1,10 +1,18 @@
 package com.hotmoka.android.gallery.view.single;
 
 import android.support.annotation.UiThread;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.hotmoka.android.gallery.MVC;
 import com.hotmoka.android.gallery.R;
+import com.hotmoka.android.gallery.view.GalleryActivity;
 
 /**
  * The picture fragment for a single pane layout.
@@ -13,6 +21,7 @@ import com.hotmoka.android.gallery.R;
  * reporting the title of the picture below it.
  */
 public class PictureFragment extends com.hotmoka.android.gallery.view.PictureFragment {
+    private ShareActionProvider mShareActionProvider;
 
     /**
      * Convenience method to create a fragment that shows the picture
@@ -29,6 +38,7 @@ public class PictureFragment extends com.hotmoka.android.gallery.view.PictureFra
         return fragment;
     }
 
+
     @Override @UiThread
     protected boolean showBitmapIfDownloaded(int position) {
         boolean shown = super.showBitmapIfDownloaded(position);
@@ -39,4 +49,38 @@ public class PictureFragment extends com.hotmoka.android.gallery.view.PictureFra
 
         return shown;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        //  Log.v("AA",menu.toString());
+        inflater.inflate(R.menu.fragment_titles, menu);
+
+        MenuItem item;
+
+        item = menu.findItem(R.id.menu_item_load);
+        item.setVisible(false);
+
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_share) {
+
+
+            return true;
+        }
+
+        Log.d("No", "No");
+        return false;
+    }
+
 }

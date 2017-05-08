@@ -26,7 +26,7 @@ import com.hotmoka.android.gallery.model.Pictures;
  * Flickr Gallery app.
  */
 public abstract class PictureFragment extends Fragment implements GalleryFragment {
-    private final static String ARG_POSITION = "position";
+    protected final static String ARG_POSITION = "position";
 
     /**
      * This constructor is called when creating the view for the
@@ -56,12 +56,12 @@ public abstract class PictureFragment extends Fragment implements GalleryFragmen
     public void onStart() {
         super.onStart();
         showPictureOrDownloadIfMissing();
-        Button shareButton = (Button) getActivity().findViewById(R.id.shareButton);
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View w) {
-                MVC.controller.onSharedClicked(getArguments().getInt(ARG_POSITION));
-            }
-        });
+      //  Button shareButton = (Button) getActivity().findViewById(R.id.shareButton);
+       // shareButton.setOnClickListener(new View.OnClickListener() {
+        //    public void onClick(View w) {
+
+        //    }
+        //});
 
 
     }

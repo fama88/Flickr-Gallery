@@ -62,7 +62,6 @@ public abstract class TitlesFragment extends ListFragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-      //  Log.v("AA",menu.toString());
         inflater.inflate(R.menu.fragment_titles, menu);
 
     }
@@ -83,8 +82,6 @@ public abstract class TitlesFragment extends ListFragment
         // Delegate to the controller
         MVC.controller.onTitleSelected(position);
     }
-    @Override
-    public void startShareActivity(int position) {};
 
     @Override @UiThread
     public void onModelChanged(Pictures.Event event) {

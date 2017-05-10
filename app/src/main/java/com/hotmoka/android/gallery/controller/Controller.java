@@ -1,8 +1,11 @@
 package com.hotmoka.android.gallery.controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.UiThread;
 import android.util.Log;
 import android.widget.ImageView;
@@ -56,10 +59,24 @@ public class Controller {
         return false;
     }
 
+    /**
+     * When the shared button is clicked, it creates a new share intent
+     * that allows the user to share the picture.
+     * @param position
+     * @param context
+     */
+    public void onSharedClicked(int position, Context context) {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        String pathOfBitmap = MediaStore.Images.Media.insertImage(context.getContentResolver(), MVC.model.getBitmap(position), "title", null);
+        Uri bmpUri = Uri.parse(pathOfBitmap);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+        shareIntent.setType("image/*");
 
-    public void onSharedClicked(int position) {
-        MVC.forEachView(view -> view.shareImage(position));
+        context.startActivity(shareIntent);
+        context.getContentResolver().delete(bmpUri, null,null);
     }
+
     /**
      * Takes note that the up to date list of titles is needed.
      * It will download it from the Internet, asking Flickr about the
@@ -70,6 +87,7 @@ public class Controller {
     public void onTitlesReloadRequest(Context context) {
         taskCounter.incrementAndGet();
         ControllerService.fetchListOfPictures(context, 40);
+        MVC.forEachView(view -> view.setShareButtonVisibility(false));
     }
 
     /**
@@ -84,6 +102,7 @@ public class Controller {
     @UiThread
     public void onTitleSelected(int position) {
         MVC.forEachView(view -> view.showPicture(position));
+        MVC.forEachView(view -> view.setShareButtonVisibility(true));
     }
 
     /**

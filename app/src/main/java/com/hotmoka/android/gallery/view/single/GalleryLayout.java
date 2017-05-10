@@ -57,10 +57,10 @@ public class GalleryLayout extends FrameLayout
             // Commit the transaction
             .commit();
     }
+
     @Override
-    public void shareImage(int position) {
-        getFragment().startShareActivity(position);
-    }
+    public void setShareButtonVisibility(boolean visible) {};
+
     @Override
     public void onModelChanged(Pictures.Event event) {
         // Delegate to the only fragment inside this layout

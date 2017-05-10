@@ -9,6 +9,4 @@ public interface GalleryFragment {
     @UiThread
     void onModelChanged(Pictures.Event event);
 
-    @UiThread
-    void startShareActivity(int position);
 }

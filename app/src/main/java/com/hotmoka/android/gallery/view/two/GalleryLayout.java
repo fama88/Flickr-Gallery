@@ -2,6 +2,7 @@ package com.hotmoka.android.gallery.view.two;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
@@ -40,7 +41,10 @@ public class GalleryLayout extends LinearLayout
         getPictureFragment().showPicture(position);
     }
 
-    public void shareImage(int position) {getPictureFragment().startShareActivity(position); }
+    @Override
+    public void setShareButtonVisibility(boolean visible) {
+        this.getTitlesFragment().setShareButtonVisibility(visible);
+    }
 
     @Override
     public void onModelChanged(Pictures.Event event) {

@@ -3,7 +3,7 @@ package com.hotmoka.android.gallery.view;
 import android.support.annotation.UiThread;
 
 import com.hotmoka.android.gallery.model.Pictures;
-
+import android.content.Intent;
 /**
  * The view of the application. It is the screen that
  * interacts with the user.
@@ -18,8 +18,12 @@ public interface GalleryLayout {
     @UiThread
     void showPicture(int position);
 
+    /**
+     * Handles the Share Button visibility, needed for tablet version
+     * @param visible
+     */
     @UiThread
-    void shareImage(int position);
+    void setShareButtonVisibility(boolean visible);
 
     /**
      * Notifies that the model has changed. The view

@@ -66,15 +66,12 @@ public class PictureFragment extends com.hotmoka.android.gallery.view.PictureFra
 
         item = menu.findItem(R.id.menu_item_load);
         item.setVisible(false);
-
-
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_item_share) {
-            MVC.controller.onSharedClicked(getArguments().getInt(ARG_POSITION));
+            MVC.controller.onSharedClicked(getArguments().getInt(ARG_POSITION), getActivity());
             return true;
         }
 

@@ -18,11 +18,27 @@ import com.hotmoka.android.gallery.R;
  * layout classes.
  */
 public class GalleryActivity extends Activity {
-
+    public static Uri bmpUri;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            getContentResolver().delete(bmpUri, null, null);
+            bmpUri = null;
+        }
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        if (bmpUri != null) {
+            getContentResolver().delete(bmpUri, null, null);
+            bmpUri = null;
+        }
     }
 
     /**
@@ -37,6 +53,10 @@ public class GalleryActivity extends Activity {
      */
     public void hideProgressIndicator() {
         findViewById(R.id.progress).setVisibility(View.INVISIBLE);
+    }
+
+    public void setSharedImgUri(Uri uri) {
+        bmpUri = uri;
     }
 
 }

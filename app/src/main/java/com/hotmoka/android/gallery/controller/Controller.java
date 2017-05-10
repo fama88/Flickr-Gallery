@@ -61,7 +61,7 @@ public class Controller {
     public void onSharedClicked(int position, Context context) {
         try {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            String pathOfBitmap = MediaStore.Images.Media.insertImage(context.getContentResolver(), MVC.model.getBitmap(position), "title", null);
+            String pathOfBitmap = MediaStore.Images.Media.insertImage(context.getContentResolver(), MVC.model.getBitmap(position), "TempPicture",  null);
             Uri bmpUri = Uri.parse(pathOfBitmap);
             shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
             shareIntent.setType("image/*");

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.hotmoka.android.gallery.MVC;
 import com.hotmoka.android.gallery.R;
+import com.hotmoka.android.gallery.model.Pictures;
 import com.hotmoka.android.gallery.view.GalleryActivity;
 
 /**

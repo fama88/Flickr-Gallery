@@ -1,16 +1,12 @@
 package com.hotmoka.android.gallery.view;
 
 import android.app.ListFragment;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.hotmoka.android.gallery.MVC;

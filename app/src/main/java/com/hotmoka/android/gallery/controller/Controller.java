@@ -1,23 +1,16 @@
 package com.hotmoka.android.gallery.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.UiThread;
-import android.util.Log;
-import android.widget.ImageView;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.hotmoka.android.gallery.MVC;
-
-import org.apache.http.HttpStatus;
+import com.hotmoka.android.gallery.view.GalleryActivity;
 
 /**
  * The controller reacts to user events and allows the execution
@@ -66,15 +59,17 @@ public class Controller {
      * @param context
      */
     public void onSharedClicked(int position, Context context) {
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        String pathOfBitmap = MediaStore.Images.Media.insertImage(context.getContentResolver(), MVC.model.getBitmap(position), "title", null);
-        Uri bmpUri = Uri.parse(pathOfBitmap);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-        shareIntent.setType("image/*");
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            String pathOfBitmap = MediaStore.Images.Media.insertImage(context.getContentResolver(), MVC.model.getBitmap(position), "title", null);
+            Uri bmpUri = Uri.parse(pathOfBitmap);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+            shareIntent.setType("image/*");
+            ((GalleryActivity) context).setSharedImgUri(bmpUri);
+            ((Activity) context).startActivityForResult(Intent.createChooser(shareIntent, "Share"), 1);
+        } catch (NullPointerException e) {
 
-        context.startActivity(shareIntent);
-        context.getContentResolver().delete(bmpUri, null,null);
+        }
     }
 
     /**

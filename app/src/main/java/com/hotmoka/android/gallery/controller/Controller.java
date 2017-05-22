@@ -67,7 +67,7 @@ public class Controller {
             shareIntent.setType("image/*");
             ((GalleryActivity) context).setSharedImgUri(bmpUri);
             ((Activity) context).startActivityForResult(Intent.createChooser(shareIntent, "Share"), 1);
-        } catch (NullPointerException e) {
+    } catch (NullPointerException e) {
 
         }
     }

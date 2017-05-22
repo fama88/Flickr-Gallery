@@ -22,7 +22,6 @@ import com.hotmoka.android.gallery.view.GalleryActivity;
  * reporting the title of the picture below it.
  */
 public class PictureFragment extends com.hotmoka.android.gallery.view.PictureFragment {
-    private ShareActionProvider mShareActionProvider;
 
     /**
      * Convenience method to create a fragment that shows the picture

@@ -19,13 +19,6 @@ public interface GalleryLayout {
     void showPicture(int position);
 
     /**
-     * Handles the Share Button visibility, needed for tablet version
-     * @param visible
-     */
-    @UiThread
-    void setShareButtonVisibility(boolean visible);
-
-    /**
      * Notifies that the model has changed. The view
      * will likely redraw itself
      *

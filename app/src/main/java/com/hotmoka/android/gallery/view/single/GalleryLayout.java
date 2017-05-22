@@ -59,9 +59,6 @@ public class GalleryLayout extends FrameLayout
     }
 
     @Override
-    public void setShareButtonVisibility(boolean visible) {};
-
-    @Override
     public void onModelChanged(Pictures.Event event) {
         // Delegate to the only fragment inside this layout
         getFragment().onModelChanged(event);

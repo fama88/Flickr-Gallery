@@ -42,11 +42,6 @@ public class GalleryLayout extends LinearLayout
     }
 
     @Override
-    public void setShareButtonVisibility(boolean visible) {
-        this.getTitlesFragment().setShareButtonVisibility(visible);
-    }
-
-    @Override
     public void onModelChanged(Pictures.Event event) {
         // Delegate to both fragments inside this layout
         getTitlesFragment().onModelChanged(event);

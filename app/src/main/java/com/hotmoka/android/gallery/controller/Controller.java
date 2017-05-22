@@ -82,7 +82,6 @@ public class Controller {
     public void onTitlesReloadRequest(Context context) {
         taskCounter.incrementAndGet();
         ControllerService.fetchListOfPictures(context, 40);
-        MVC.forEachView(view -> view.setShareButtonVisibility(false));
     }
 
     /**
@@ -97,7 +96,6 @@ public class Controller {
     @UiThread
     public void onTitleSelected(int position) {
         MVC.forEachView(view -> view.showPicture(position));
-        MVC.forEachView(view -> view.setShareButtonVisibility(true));
     }
 
     /**

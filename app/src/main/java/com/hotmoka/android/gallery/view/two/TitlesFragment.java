@@ -16,7 +16,8 @@ import com.hotmoka.android.gallery.view.GalleryActivity;
  * behavior by making the selected item remain highlighted.
  */
 public class TitlesFragment extends com.hotmoka.android.gallery.view.TitlesFragment {
-    private static boolean shareVisibility = false;
+    private boolean shareVisibility = false;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -28,6 +29,7 @@ public class TitlesFragment extends com.hotmoka.android.gallery.view.TitlesFragm
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         // Keep the selected item checked also after click
+        setShareButtonVisibility(true);
         getListView().setItemChecked(position, true);
     }
 
@@ -46,6 +48,10 @@ public class TitlesFragment extends com.hotmoka.android.gallery.view.TitlesFragm
         if (item.getItemId() == R.id.menu_item_share) {
             MVC.controller.onSharedClicked(getListView().getCheckedItemPosition(), getActivity());
             return true;
+        }
+        if (item.getItemId() == R.id.menu_item_load) {
+            super.onOptionsItemSelected(item);
+            setShareButtonVisibility(false);
         }
 
         return false;

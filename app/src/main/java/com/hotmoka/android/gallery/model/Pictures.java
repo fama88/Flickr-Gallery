@@ -75,7 +75,7 @@ public class Pictures {
 
     @UiThread
     public synchronized Bitmap getThumbnails(int position) {
-        if (urls == null || position < 0 || position >= urls.length)
+        if (thumbnail_urls == null || position < 0 || position >= thumbnail_urls.length)
             return null;
         else
             return thumbnails.get(thumbnail_urls[position]);

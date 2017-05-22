@@ -19,6 +19,12 @@ import com.hotmoka.android.gallery.MVC;
 class BitmapFetcher {
     private final static String TAG = BitmapFetcher.class.getSimpleName();
 
+    protected void SetBitmapOnModel(String url, Bitmap bitmap)
+    {
+        if (bitmap != null && url != null)
+            MVC.model.setBitmap(url, bitmap);
+    }
+
     @WorkerThread
     BitmapFetcher(String url) {
         Bitmap bitmap = null;
@@ -34,8 +40,8 @@ class BitmapFetcher {
             MVC.controller.taskFinished();
         }
 
-        if (bitmap != null)
-            MVC.model.setBitmap(url, bitmap);
+
+        SetBitmapOnModel(url, bitmap);
     }
 
     private byte[] getUrlBytes(String url) throws IOException {

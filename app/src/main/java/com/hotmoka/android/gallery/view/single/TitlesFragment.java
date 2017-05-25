@@ -17,5 +17,6 @@ public class TitlesFragment extends com.hotmoka.android.gallery.view.TitlesFragm
 
         MenuItem item = menu.findItem(R.id.menu_item_share);
         item.setVisible(false);
+
     }
 }

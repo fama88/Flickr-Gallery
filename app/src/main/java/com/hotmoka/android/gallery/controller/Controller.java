@@ -24,6 +24,7 @@ public class Controller {
      */
     private final AtomicInteger taskCounter = new AtomicInteger();
 
+    private Uri imageInSharingUri;
     /**
      * Takes note that a picture is needed and must be downloaded
      * from the Internet.
@@ -66,11 +67,21 @@ public class Controller {
             Uri bmpUri = Uri.parse(pathOfBitmap);
             shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
             shareIntent.setType("image/*");
-            MVC.model.setSharingPictureUri(bmpUri);
-            Fragment testFragment = new Fragment();
+            imageInSharingUri = bmpUri;
             ((Activity) context).startActivityForResult(Intent.createChooser(shareIntent, "Share"), 1);
         } catch (NullPointerException e) {
 
+        }
+    }
+
+    /**
+     * Handles deletion of picture from mediastore
+     * @param context
+     */
+    public void onSharedComplete(Activity context) {
+        if (imageInSharingUri != null) {
+            context.getContentResolver().delete(imageInSharingUri, null, null);
+            imageInSharingUri = null;
         }
     }
 

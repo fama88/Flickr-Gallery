@@ -28,19 +28,13 @@ public class GalleryActivity extends Activity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
-                Uri bmpUri = MVC.model.getSharingPicUri();
-                getContentResolver().delete(bmpUri, null, null);
-                MVC.model.setSharingPictureUri(null);
+            MVC.controller.onSharedComplete(this);
         }
     }
 
     public void onDestroy() {
         super.onDestroy();
-        Uri bmpUri = MVC.model.getSharingPicUri();
-        if (bmpUri != null) {
-            getContentResolver().delete(bmpUri, null, null);
-            MVC.model.setSharingPictureUri(null);
-        }
+        MVC.controller.onSharedComplete(this);
     }
 
     /**

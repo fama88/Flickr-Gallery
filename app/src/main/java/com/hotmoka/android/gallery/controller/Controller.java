@@ -1,6 +1,7 @@
 package com.hotmoka.android.gallery.controller;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -65,9 +66,10 @@ public class Controller {
             Uri bmpUri = Uri.parse(pathOfBitmap);
             shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
             shareIntent.setType("image/*");
-            ((GalleryActivity) context).setSharedImgUri(bmpUri);
+            MVC.model.setSharingPictureUri(bmpUri);
+            Fragment testFragment = new Fragment();
             ((Activity) context).startActivityForResult(Intent.createChooser(shareIntent, "Share"), 1);
-    } catch (NullPointerException e) {
+        } catch (NullPointerException e) {
 
         }
     }

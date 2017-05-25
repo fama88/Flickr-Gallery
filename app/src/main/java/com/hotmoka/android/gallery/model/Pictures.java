@@ -1,6 +1,7 @@
 package com.hotmoka.android.gallery.model;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.UiThread;
@@ -46,7 +47,7 @@ public class Pictures {
      */
     private final Map<String, Bitmap> thumbnails = new HashMap<>();
 
-
+    private Uri sharingPicUri;
 
     /**
      * Yields the titles of the pictures, if any.
@@ -107,6 +108,16 @@ public class Pictures {
         return thumbnail_urls != null && position >= 0 && position < thumbnail_urls.length ? thumbnail_urls[position] : null;
     }
 
+
+    @UiThread
+    public void setSharingPictureUri(Uri uri) {
+        this.sharingPicUri = uri;
+    }
+
+    @UiThread
+    public Uri getSharingPicUri() {
+        return this.sharingPicUri;
+    }
     /**
      * The kind of events that can be notified to a view.
      */
